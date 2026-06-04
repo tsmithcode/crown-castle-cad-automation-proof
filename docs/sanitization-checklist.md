@@ -8,6 +8,7 @@ Use this checklist before sharing the rendered brief, public repo, or local pack
 - `index.html`
 - `client-brief/CrownCastle_CAD_Automation_Technical_Alignment_Brief.html`
 - `docs/CODE_WALKTHROUGH.md`
+- `docs/AWS_ARCHITECTURE.md`
 - `docs/TECHNICAL_ALIGNMENT_NOTES.md`
 - `docs/runbook.md`
 - `docs/sanitization-checklist.md`

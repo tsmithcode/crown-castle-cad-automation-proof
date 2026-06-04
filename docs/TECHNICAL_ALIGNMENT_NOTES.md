@@ -26,6 +26,14 @@ The automation should accelerate drafting, not hide uncertainty. Missing, confli
 | AutoCAD .NET API | Larger plugins, transactions, object model control, type safety, deeper CAD operations. |
 | Service/API layer | Job intake, validation contracts, queueing, storage, audit trail, enterprise integrations, callbacks. |
 
+## AWS Service-Level Architecture
+
+```text
+Internal UI -> API Gateway / API service -> job record -> S3 input package -> Step Functions + SQS -> CAD worker -> S3 output package -> review UI / notification -> CloudWatch + CloudTrail audit trail
+```
+
+Use API Gateway for job submission and status endpoints, S3 for versioned input/output drawing packages, Step Functions for multi-stage orchestration, SQS for the service-bus-style worker queue, CloudWatch for logs/metrics/alarms, and CloudTrail for audit evidence. Keep heavy CAD execution outside Lambda unless the operation is very small and runtime-safe. The CAD worker choice should be spiked early: Windows EC2 worker, ECS/Fargate, EKS, Autodesk Platform Services, or hybrid.
+
 ## Requirements To Confirm Before Production
 
 1. What are the canonical templates, block names, layer names, and attribute tags?

@@ -15,6 +15,7 @@ It includes a rendered technical brief, a compact AutoLISP proof, sample scope d
 - Rendered brief: <https://tsmithcode.github.io/crown-castle-cad-automation-proof/>
 - GitHub repo: <https://github.com/tsmithcode/crown-castle-cad-automation-proof>
 - Public HTML file: [`client-brief/CrownCastle_CAD_Automation_Technical_Alignment_Brief.html`](client-brief/CrownCastle_CAD_Automation_Technical_Alignment_Brief.html)
+- AWS architecture addendum: [`docs/AWS_ARCHITECTURE.md`](docs/AWS_ARCHITECTURE.md)
 - AutoLISP loader: [`src/load_all.lsp`](src/load_all.lsp)
 - Sample scope data: [`samples/scope_sample.csv`](samples/scope_sample.csv)
 
@@ -22,8 +23,7 @@ It includes a rendered technical brief, a compact AutoLISP proof, sample scope d
 
 - Prepared by: CAD Guardian LLC
 - Alignment context: Crown Castle CAD automation technical proof
-- Coordination contact: Geeta Modi
-- Primary recipient: Kumar Annamalai, Head of Product, Data & AI, and technical staff
+- Primary audience: Crown Castle technical stakeholders and engineering staff
 
 The person and recipient details above are package context provided for this proof. Public Crown Castle company context in the HTML brief is sourced from public Crown Castle pages and releases.
 
@@ -35,7 +35,8 @@ The person and recipient details above are package context provided for this pro
 - Adding callouts and explicit review flags.
 - Producing validation reports instead of hiding uncertainty.
 - Cleaning legacy drawings conservatively.
-- Drawing the line between AutoLISP and a larger C#/.NET/API service layer.
+- Drawing the line between AutoLISP and a larger C#/.NET/API/AWS service layer.
+- Mapping an AWS-native architecture for API Gateway, S3, Step Functions, SQS, CAD workers, CloudWatch, CloudTrail, KMS, and Secrets Manager.
 
 ## Repo Structure
 
@@ -94,6 +95,16 @@ The sample CSV intentionally includes invalid rows. The point is not to automate
 | `CC_SCOPECSV2DRAFT` | [`src/single_file_solutions/CC_SCOPECSV_TO_DRAFT.lsp`](src/single_file_solutions/CC_SCOPECSV_TO_DRAFT.lsp) | Ingests scope CSV, validates rows, places valid items, flags issues, and writes a report. |
 | `CC_VALIDATE_DWG` | [`src/single_file_solutions/CC_DWG_VALIDATION_REPORT.lsp`](src/single_file_solutions/CC_DWG_VALIDATION_REPORT.lsp) | Writes a standards, attribute, and review-flag validation report. |
 | `CC_NORMALIZE_LEGACY` | [`src/single_file_solutions/CC_NORMALIZE_LEGACY_DWG.lsp`](src/single_file_solutions/CC_NORMALIZE_LEGACY_DWG.lsp) | Performs auditable legacy layer normalization. |
+
+## AWS Architecture Addendum
+
+The technical discussion clarified that the service-level cloud map matters as much as the AutoLISP proof. The AWS reference flow is:
+
+```text
+Internal UI -> API Gateway / API service -> job record -> S3 input package -> Step Functions + SQS -> CAD worker -> S3 output package -> review UI / notification -> CloudWatch + CloudTrail audit trail
+```
+
+See [`docs/AWS_ARCHITECTURE.md`](docs/AWS_ARCHITECTURE.md) for the concise service map, worker-runtime decision matrix, and early qualification questions.
 
 ## Core Technical Stance
 
