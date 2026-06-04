@@ -19,6 +19,7 @@
 | `docs/TECHNICAL_ALIGNMENT_NOTES.md` | Concise proof narrative, production boundary notes, confidence model, and AI governance. | Public-safe |
 | `docs/runbook.md` | Access and validation runbook. | Public-safe |
 | `docs/sanitization-checklist.md` | Public release checklist. | Public-safe |
+| `templates/opportunity-technical-alignment/` | Reusable technical alignment template pack for future opportunities/projects. | Public-safe |
 | `scripts/verify_readiness.py` | Local readiness and sanitization scan. | Public-safe |
 
 ## Explicitly Excluded

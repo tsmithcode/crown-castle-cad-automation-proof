@@ -16,6 +16,7 @@ It includes a rendered technical brief, a compact AutoLISP proof, sample scope d
 - GitHub repo: <https://github.com/tsmithcode/crown-castle-cad-automation-proof>
 - Public HTML file: [`client-brief/CrownCastle_CAD_Automation_Technical_Alignment_Brief.html`](client-brief/CrownCastle_CAD_Automation_Technical_Alignment_Brief.html)
 - AWS architecture addendum: [`docs/AWS_ARCHITECTURE.md`](docs/AWS_ARCHITECTURE.md)
+- Reusable opportunity template: [`templates/opportunity-technical-alignment/`](templates/opportunity-technical-alignment/)
 - AutoLISP loader: [`src/load_all.lsp`](src/load_all.lsp)
 - Sample scope data: [`samples/scope_sample.csv`](samples/scope_sample.csv)
 
@@ -53,6 +54,8 @@ The person and recipient details above are package context provided for this pro
 |   |-- TECHNICAL_ALIGNMENT_NOTES.md
 |   |-- runbook.md
 |   `-- sanitization-checklist.md
+|-- templates/
+|   `-- opportunity-technical-alignment/
 |-- samples/
 |   `-- scope_sample.csv
 |-- scripts/
@@ -108,6 +111,16 @@ Internal UI -> API Gateway / API service -> job record -> S3 input package -> St
 ```
 
 See [`docs/AWS_ARCHITECTURE.md`](docs/AWS_ARCHITECTURE.md) for the concise service map, worker-runtime decision matrix, and early qualification questions.
+
+## Reusable Opportunity Template
+
+The generalized template pack lives at [`templates/opportunity-technical-alignment/`](templates/opportunity-technical-alignment/). Use it to create the next client-safe or public-safe technical proof from any opportunity or project.
+
+It includes:
+
+- [`TECHNICAL_ALIGNMENT_BRIEF_TEMPLATE.md`](templates/opportunity-technical-alignment/TECHNICAL_ALIGNMENT_BRIEF_TEMPLATE.md)
+- [`TEAMS_OR_EMAIL_SHARE_TEMPLATE.md`](templates/opportunity-technical-alignment/TEAMS_OR_EMAIL_SHARE_TEMPLATE.md)
+- [`SANITIZATION_CHECKLIST_TEMPLATE.md`](templates/opportunity-technical-alignment/SANITIZATION_CHECKLIST_TEMPLATE.md)
 
 ## Target Cloud Use Case
 

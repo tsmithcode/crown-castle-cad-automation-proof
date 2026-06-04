@@ -12,6 +12,7 @@ Use this checklist before sharing the rendered brief, public repo, or local pack
 - `docs/TECHNICAL_ALIGNMENT_NOTES.md`
 - `docs/runbook.md`
 - `docs/sanitization-checklist.md`
+- `templates/opportunity-technical-alignment/**/*.md`
 - `samples/scope_sample.csv`
 - `scripts/verify_readiness.py`
 - `src/**/*.lsp`
