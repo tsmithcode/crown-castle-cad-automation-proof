@@ -1,0 +1,22 @@
+# AutoCAD transient files
+*.bak
+*.sv$
+*.dwl
+*.dwl2
+*.ac$
+*.log
+
+# Generated CAD artifacts from local demos
+*.dwg
+*.dxf
+*.pdf
+*.zip
+*_CC_*.csv
+*_review.pdf
+dist/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

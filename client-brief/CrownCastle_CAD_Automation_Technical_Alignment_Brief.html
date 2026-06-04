@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crown Castle CAD Automation · Technical Alignment Brief</title>
+<meta name="description" content="Technical alignment brief with rendered GitHub Pages access, source proof links, accessible navigation, search, focus mode, and documentation index.">
+<style>
+:root{
+  --cc-purple-deep:#421a72;
+  --cc-purple-dark:#3c136d;
+  --cc-purple:#702895;
+  --cc-purple-mid:#782c8b;
+  --cc-purple-bright:#832c98;
+  --cc-violet:#5a2f93;
+  --cc-red:#d02e53;
+  --cc-blue:#095eb8;
+  --cc-cyan:#38aeea;
+  --cc-teal:#079a8f;
+  --ink:#241037;
+  --body:#4d5563;
+  --muted:#6b7280;
+  --line:#e6e1ea;
+  --soft:#faf8fc;
+  --white:#fff;
+  --shadow:0 22px 55px rgba(66,26,114,.16);
+  --radius:0;
+  --sans:"Avenir Next",Avenir,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",Times,serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:#fff}
+body{margin:0;color:var(--ink);background:#fff;font-family:var(--sans);font-size:16px;line-height:1.6;text-rendering:optimizeLegibility}
+a{color:var(--cc-blue);text-decoration-thickness:.08em;text-underline-offset:3px}
+a:hover{color:var(--cc-red)}
+.skip{position:absolute;left:-999px;top:10px;background:#000;color:#fff;padding:10px 14px;z-index:9999}.skip:focus{left:10px}
+.cc-topbar{background:var(--cc-purple-mid);color:#fff;min-height:72px;display:flex;align-items:center;justify-content:center;gap:28px;padding:16px clamp(18px,5vw,72px);font-size:.92rem;font-weight:800;letter-spacing:.02em;text-align:center}
+.cc-topbar a{color:#fff;font-weight:900}.topbar-button{display:inline-flex;align-items:center;justify-content:center;min-width:142px;border:2px solid #fff;color:#fff;text-decoration:none;padding:10px 22px;letter-spacing:.14em;font-weight:950;font-size:.78rem}.topbar-x{font-size:1.5rem;line-height:1;opacity:.95}
+.hero-shell{max-width:1640px;margin:12px auto 0;padding:0 clamp(14px,3vw,0)}
+.hero-geometry{position:relative;overflow:hidden;min-height:620px;background:var(--cc-purple-deep);isolation:isolate;color:#fff;display:grid;grid-template-rows:auto 1fr;border:0}
+.hero-geometry::before{content:"";position:absolute;inset:0;background:var(--cc-purple-bright);clip-path:polygon(0 36%,38% 0,61% 0,49% 100%,0 100%);z-index:-2}
+.hero-geometry::after{content:"";position:absolute;inset:0;background:var(--cc-violet);clip-path:polygon(53% 27%,100% 40%,100% 100%,47% 100%);z-index:-3}
+.hero-corner{position:absolute;right:0;top:0;width:40%;height:44%;background:#361362;clip-path:polygon(0 0,100% 0,100% 100%,0 72%);z-index:-1;opacity:.86}
+.hero-bottom{position:absolute;left:0;bottom:-1px;width:35%;height:18%;background:#361362;clip-path:polygon(0 25%,100% 100%,0 100%);z-index:-1;opacity:.9}
+.hero-content{padding:72px clamp(28px,7vw,122px) 24px;max-width:1360px;margin:auto;text-align:center}.eyebrow{margin:0 0 16px;color:#fff;font-weight:950;letter-spacing:.18em;text-transform:uppercase;font-size:.78rem}.hero-content h1{font-family:var(--serif);font-weight:700;line-height:.96;letter-spacing:-.04em;margin:0 auto 24px;max-width:1180px;font-size:clamp(3.1rem,7.2vw,6.55rem)}.hero-content p{font-size:clamp(1.05rem,1.9vw,1.45rem);line-height:1.45;max-width:1020px;margin:0 auto;color:#fff}.cta-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:32px}.cc-button{display:inline-flex;align-items:center;justify-content:center;border:2px solid #fff;min-height:52px;padding:14px 30px;text-decoration:none;letter-spacing:.18em;text-transform:uppercase;font-size:.78rem;font-weight:950}.cc-button.red{background:var(--cc-red);border-color:var(--cc-red);color:#fff}.cc-button.red:hover{background:#b92648;border-color:#b92648;color:#fff}.cc-button.ghost{color:#fff;background:rgba(255,255,255,.06)}.cc-button.ghost:hover{background:#fff;color:var(--cc-purple-deep)}
+.hero-lanes{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:clamp(20px,6vw,96px);padding:28px clamp(28px,9vw,180px) 92px;text-align:center}.hero-lanes h2{font-family:var(--serif);font-size:clamp(2rem,3.2vw,3.35rem);font-weight:500;line-height:1.08;margin:0 0 24px;color:#fff}.lane-link{display:inline-flex;background:var(--cc-red);color:#fff;text-decoration:none;letter-spacing:.18em;text-transform:uppercase;font-size:.76rem;font-weight:950;padding:13px 26px}.lane-link:hover{background:#b92648;color:#fff}
+.toolbar{position:sticky;top:0;z-index:900;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);display:grid;grid-template-columns:minmax(220px,1fr) auto auto auto auto auto;gap:10px;align-items:center;padding:10px clamp(14px,4vw,58px);border-bottom:1px solid var(--line);box-shadow:0 8px 26px rgba(66,26,114,.08)}.toolbar input{width:100%;height:44px;border:2px solid #d8cfe1;padding:0 14px;font-size:1rem;color:var(--ink);background:#fff}.toolbar input:focus{border-color:var(--cc-purple);outline:3px solid rgba(208,46,83,.22);outline-offset:1px}.tool-btn,.copy-btn{border:2px solid var(--cc-purple-deep);background:#fff;color:var(--cc-purple-deep);height:44px;padding:0 14px;font-size:.76rem;font-weight:950;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.tool-btn:hover,.copy-btn:hover{background:var(--cc-purple-deep);color:#fff}.tool-btn.primary{background:var(--cc-red);border-color:var(--cc-red);color:#fff}.tool-btn.primary:hover{background:#b92648;border-color:#b92648}.result-count{font-size:.78rem;color:#5b5361;font-weight:800;white-space:nowrap}
+main{max-width:1640px;margin:0 auto;padding:28px clamp(14px,3vw,0) 84px}.section{margin:22px 0}.section-inner{padding:0 clamp(18px,6vw,112px)}.section-kicker{color:var(--cc-red);font-weight:950;letter-spacing:.16em;text-transform:uppercase;font-size:.76rem;margin:0 0 8px}.section-title{font-family:var(--serif);font-size:clamp(2.2rem,4.7vw,5rem);font-weight:600;line-height:.98;letter-spacing:-.035em;margin:0 0 22px;color:var(--cc-purple-deep)}.section-subtitle{max-width:960px;color:#5d5267;font-size:1.12rem;margin:0 0 28px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}.span-12{grid-column:span 12}.span-8{grid-column:span 8}.span-7{grid-column:span 7}.span-6{grid-column:span 6}.span-5{grid-column:span 5}.span-4{grid-column:span 4}.span-3{grid-column:span 3}.card{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:28px;position:relative}.card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:9px;background:var(--cc-purple)}.card.teal::after{background:var(--cc-teal)}.card.cyan::after{background:var(--cc-cyan)}.card.red::after{background:var(--cc-red)}.card.blue::after{background:var(--cc-blue)}.card.plain::after{display:none}.card h2,.card h3{font-family:var(--serif);font-weight:500;line-height:1.04;letter-spacing:-.025em;color:var(--cc-purple-deep);margin:0 0 14px}.card h2{font-size:clamp(1.9rem,3vw,3.05rem)}.card h3{font-size:clamp(1.45rem,2.1vw,2.25rem)}.card p{margin:.45rem 0;color:#4f5663}.lead{font-size:1.12rem;font-weight:750;color:#332044!important}.muted{color:#6b7280!important}.small{font-size:.88rem;color:#6b7280}.label{font-size:.73rem;letter-spacing:.17em;text-transform:uppercase;font-weight:950;color:var(--cc-red)}
+.industry{background:var(--cc-purple-mid);color:#fff;max-width:1640px;margin:28px auto;padding:48px clamp(24px,8vw,126px) 80px;position:relative;overflow:hidden}.industry::after{content:"";position:absolute;right:0;bottom:0;width:28%;height:18px;background:var(--cc-teal)}.industry .section-title{color:#fff;max-width:860px}.industry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}.industry-card{background:#fff;color:var(--ink);padding:36px 34px 70px;min-height:360px;position:relative;box-shadow:0 22px 40px rgba(32,8,61,.16)}.industry-card::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--cc-teal)}.industry-card:nth-child(2)::after{background:var(--cc-purple-deep)}.industry-card:nth-child(3)::after{background:var(--cc-cyan)}.industry-card h3{font-family:var(--serif);font-weight:500;color:var(--cc-purple-deep);font-size:clamp(2rem,2.8vw,3.05rem);line-height:1.06;margin:0 0 22px}.industry-card p{color:#69727f}.card-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;text-transform:uppercase;letter-spacing:.18em;font-size:.74rem;font-weight:950;color:var(--cc-blue);margin-top:18px}.card-link:hover{color:var(--cc-red)}
+.pillrow{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #dacfe3;background:#fbf9fc;color:var(--cc-purple-deep);font-size:.78rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase}.pill.red{background:#fff5f7;border-color:#f5b5c5;color:#a7193c}.pill.blue{background:#f1f7ff;border-color:#bbd8ff;color:#084f9a}.pill.teal{background:#f0fffd;border-color:#a9e6df;color:#04766e}.pill.gray{background:#f8f8f8;border-color:#ddd;color:#555}
+ul,ol{padding-left:1.2rem;margin:.75rem 0}li{margin:.3rem 0;color:#4d5563}.check li{list-style:"✓  "}.warn li{list-style:"△  "}.tight li{margin:.16rem 0}.no-bullets{list-style:none;padding-left:0}.num{font-variant-numeric:tabular-nums}.copybox{position:relative;border:1px solid #e5ddea;background:#fbf9fc;padding:20px 150px 20px 20px;margin:16px 0}.copybox .copy-btn{position:absolute;right:16px;top:16px;height:36px;padding:0 12px;font-size:.7rem}.copy-target{white-space:pre-wrap;color:#3f3548}.callout{border-left:7px solid var(--cc-red);background:#fff7f9;padding:18px 20px;margin:18px 0;color:#3f3548}.callout.blue{border-color:var(--cc-blue);background:#f4f8ff}.callout.teal{border-color:var(--cc-teal);background:#f2fffd}.callout.purple{border-color:var(--cc-purple);background:#fbf7ff}.callout strong{color:var(--cc-purple-deep)}
+table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #e4dce8;background:#fff;margin:16px 0;overflow:hidden}th,td{text-align:left;vertical-align:top;padding:14px 15px;border-bottom:1px solid #ece6ef;color:#4d5563}th{background:#f7f2fa;color:var(--cc-purple-deep);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:950}tr:last-child td{border-bottom:0}td:first-child{font-weight:850;color:#332044}.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:18px 0}.node{border:1px solid #e4dce8;background:#fbf9fc;min-height:150px;padding:18px;position:relative}.node strong{display:block;font-family:var(--serif);font-weight:500;font-size:1.35rem;line-height:1.06;color:var(--cc-purple-deep);margin-bottom:10px}.node span{display:block;color:#5b626d;font-size:.94rem}.node::after{content:"→";position:absolute;right:-15px;top:44%;color:var(--cc-red);font-weight:900;font-size:1.2rem;z-index:2}.node:last-child::after{display:none}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:step}.step{background:#fff;border:1px solid var(--line);padding:24px 24px 26px;position:relative;min-height:220px}.step::before{counter-increment:step;content:counter(step,decimal-leading-zero);display:block;font-family:var(--serif);font-size:2.2rem;color:var(--cc-red);line-height:1;margin-bottom:16px}.step h3{font-family:var(--serif);font-size:1.8rem;line-height:1.06;color:var(--cc-purple-deep);margin:0 0 12px;font-weight:500}.step p{color:#5f6772;margin:0}.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.stat{background:#fff;border:1px solid var(--line);padding:24px;position:relative}.stat strong{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(2.6rem,4vw,4.6rem);line-height:.9;color:var(--cc-purple-deep);margin-bottom:10px}.stat span{display:block;color:#5f6772}.docgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.docblock{background:#fff;border:1px solid var(--line);padding:22px;box-shadow:0 10px 26px rgba(66,26,114,.07)}.docblock h3{font-family:var(--serif);font-weight:500;font-size:1.65rem;line-height:1.06;color:var(--cc-purple-deep);margin:0 0 12px}.docblock a{display:block;margin:9px 0;font-weight:820;color:var(--cc-blue);text-decoration:none}.docblock a:hover{text-decoration:underline;color:var(--cc-red)}.docblock small{display:block;color:#6b7280;line-height:1.35;margin-top:-4px}.mapgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.mapgrid a{display:block;border:1px solid #e4dce8;background:#fff;color:var(--cc-purple-deep);padding:17px;text-decoration:none;font-weight:950}.mapgrid a small{display:block;color:#6b7280;font-weight:600;margin-top:5px}.mapgrid a:hover{background:#fbf7ff;border-color:#c9b5d8}.notes{width:100%;min-height:150px;resize:vertical;border:2px solid #d8cfe1;padding:14px;font:inherit;color:var(--ink);background:#fff}.notes:focus{outline:3px solid rgba(208,46,83,.25);border-color:var(--cc-purple)}details{border:1px solid #e4dce8;background:#fbf9fc;padding:12px 16px;margin:14px 0}summary{cursor:pointer;font-weight:950;color:var(--cc-purple-deep);letter-spacing:.02em}summary:focus{outline:3px solid rgba(208,46,83,.25);outline-offset:3px}pre,code{font-family:var(--mono)}pre{background:#241037;color:#f6f1fb;padding:18px;overflow:auto;border:1px solid #4c2e70}.footer{border-top:1px solid var(--line);margin:48px clamp(18px,6vw,112px) 0;padding-top:20px;color:#6b7280;font-size:.92rem}.footer strong{color:var(--cc-purple-deep)}
+.search-miss{display:none!important}.search-hit{outline:3px solid rgba(208,46,83,.22);outline-offset:4px}body.large{font-size:18px}body.focus .hide-focus{display:none!important}body.focus main{max-width:1220px}body.focus .section-inner{padding:0 clamp(16px,4vw,48px)}body.focus .card,body.focus .industry-card{box-shadow:none}body.contrast{background:#fff;color:#000}body.contrast .cc-topbar,body.contrast .hero-geometry,body.contrast .industry{background:#000;color:#fff}body.contrast .hero-geometry::before,body.contrast .hero-geometry::after,body.contrast .hero-corner,body.contrast .hero-bottom{display:none}body.contrast .section-title,body.contrast .card h2,body.contrast .card h3,body.contrast .industry-card h3,body.contrast .node strong,body.contrast .step h3,body.contrast .docblock h3{color:#000}body.contrast .card,body.contrast .industry-card,body.contrast .docblock,body.contrast .step,body.contrast .stat,body.contrast .node,body.contrast table{box-shadow:none;border-color:#000}body.contrast .tool-btn,body.contrast .copy-btn,body.contrast .toolbar input,body.contrast .notes{border-color:#000}body.contrast a{color:#004c99}
+@media(max-width:1120px){.toolbar{grid-template-columns:1fr 1fr 1fr}.toolbar input{grid-column:1/-1}.span-8,.span-7,.span-6,.span-5,.span-4,.span-3{grid-column:span 12}.industry-grid,.timeline,.docgrid,.mapgrid,.statgrid{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr 1fr}.node::after{display:none}.hero-lanes{grid-template-columns:1fr}.hero-geometry{min-height:auto}.cc-topbar{justify-content:flex-start;text-align:left}.topbar-x{display:none}}
+@media(max-width:680px){.cc-topbar{display:block}.topbar-button{margin-top:12px}.hero-content{padding:48px 22px 24px}.hero-content h1{font-size:clamp(2.7rem,13vw,4.2rem)}.hero-lanes{padding:18px 22px 56px}.industry{padding:36px 18px 60px}.industry-grid,.timeline,.docgrid,.mapgrid,.statgrid,.flow{grid-template-columns:1fr}.grid{gap:16px}.card{padding:22px}.toolbar{grid-template-columns:1fr 1fr}.toolbar input{grid-column:1/-1}.result-count{grid-column:1/-1}.copybox{padding:18px}.copybox .copy-btn{position:static;margin-top:12px}.hero-shell,main{padding-left:0;padding-right:0}.section-inner{padding:0 18px}.section-title{font-size:2.45rem}.cc-button{width:100%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+@media print{.cc-topbar,.toolbar,.copy-btn,.skip,.hide-print{display:none!important}body{background:#fff;color:#000;font-size:12px}.hero-shell,main{max-width:none;padding:0}.hero-geometry,.industry{background:#fff!important;color:#000!important;min-height:0;margin:0;padding:18px 0}.hero-geometry::before,.hero-geometry::after,.hero-corner,.hero-bottom,.industry::after{display:none}.hero-content,.hero-lanes,.section-inner{padding:0}.hero-content h1,.section-title,.industry .section-title{color:#000;font-size:28px;text-align:left}.hero-content p,.hero-lanes h2,.industry .section-title{color:#000}.hero-lanes,.industry-grid,.grid,.timeline,.docgrid,.mapgrid,.statgrid,.flow{display:block}.card,.industry-card,.docblock,.step,.stat,.node{box-shadow:none;border:1px solid #999;margin:10px 0;break-inside:avoid;padding:14px}.card::after,.industry-card::after{display:none}a{color:#000;text-decoration:underline}.footer{margin:18px 0}.node::after{display:none}table{font-size:11px}}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to main content</a>
+<div class="cc-topbar" role="note">
+  <span>CAD automation technical alignment brief · prepared by CAD Guardian LLC for Crown Castle.</span>
+  <a class="topbar-button" href="https://github.com/tsmithcode/crown-castle-cad-automation-proof" target="_blank" rel="noopener">PROOF REPO</a>
+  <a class="topbar-button" href="#doc-index">DOC INDEX</a>
+  <span class="topbar-x" aria-hidden="true">×</span>
+</div>
+<header class="hero-shell" aria-labelledby="page-title">
+  <div class="hero-geometry">
+    <span class="hero-corner" aria-hidden="true"></span><span class="hero-bottom" aria-hidden="true"></span>
+    <div class="hero-content">
+      <p class="eyebrow">Enterprise CAD Automation · Drawing Quality · Workflow Integration</p>
+      <h1 id="page-title">How can we help make CAD automation drafter-ready?</h1>
+      <p>Technical alignment page for scope data, CAD standards, automation architecture, validation controls, and a practical pilot path for review-ready drawing output.</p>
+      <div class="cta-row" aria-label="Primary navigation">
+        <a class="cc-button red" href="#alignment">Align Workflow</a>
+        <a class="cc-button ghost" href="#architecture">See Architecture</a>
+        <a class="cc-button ghost" href="https://github.com/tsmithcode/crown-castle-cad-automation-proof" target="_blank" rel="noopener">Open Proof Repo</a>
+      </div>
+    </div>
+    <div class="hero-lanes" aria-label="Two working lanes">
+      <section>
+        <h2>Map source data to drawing standards.</h2>
+        <a class="lane-link" href="#inputs">Required Inputs</a>
+      </section>
+      <section>
+        <h2>Generate review-ready output packages.</h2>
+        <a class="lane-link" href="#quality">Quality Model</a>
+      </section>
+    </div>
+  </div>
+</header>
+<nav class="toolbar" aria-label="Page tools">
+  <input id="search" type="search" placeholder="Search this page…  Press /" aria-label="Search this page">
+  <button id="clearSearch" class="tool-btn" type="button">Clear</button>
+  <button id="focusBtn" class="tool-btn" type="button" aria-pressed="false">Focus</button>
+  <button id="largeBtn" class="tool-btn" type="button" aria-pressed="false">Large</button>
+  <button id="contrastBtn" class="tool-btn" type="button" aria-pressed="false">Contrast</button>
+  <button id="printBtn" class="tool-btn primary" type="button">Print / PDF</button>
+  <span id="resultCount" class="result-count" aria-live="polite">Ready</span>
+</nav>
+<main id="main">
+  <section class="section section-inner" aria-label="Share summary">
+    <div class="grid">
+      <article class="card plain span-8" data-search>
+        <p class="label">Shareable note</p>
+        <h2>Technical alignment summary</h2>
+        <div class="copybox">
+          <button class="copy-btn" type="button">Copy</button>
+          <div class="copy-target">Sharing a CAD automation technical alignment brief prepared by CAD Guardian LLC for Crown Castle.
+
+Rendered brief:
+https://tsmithcode.github.io/crown-castle-cad-automation-proof/
+
+GitHub source proof:
+https://github.com/tsmithcode/crown-castle-cad-automation-proof
+
+The brief frames an estimated implementation path for drafter-ready CAD automation: structured scope data, AutoLISP drawing execution, validation reports, review flags, and a practical pilot path. The repo contains sample AutoLISP proof files only; it does not include proprietary Crown Castle project data.</div>
+        </div>
+        <p class="small">Share the rendered brief link for normal viewing. GitHub file views show HTML source, while GitHub Pages renders the page correctly.</p>
+      </article>
+      <aside class="card teal span-4" data-search>
+        <p class="label">Fast path</p>
+        <h3>Fast path</h3>
+        <ol class="tight">
+          <li>Open the <a href="https://tsmithcode.github.io/crown-castle-cad-automation-proof/" target="_blank" rel="noopener">rendered brief</a>.</li>
+          <li>Open the <a href="https://github.com/tsmithcode/crown-castle-cad-automation-proof" target="_blank" rel="noopener">source proof repo</a>.</li>
+          <li>Start with <a href="#alignment">alignment outcomes</a>.</li>
+          <li>Use <a href="#questions">alignment questions</a> to clarify scope.</li>
+          <li>Anchor delivery around the <a href="#pilot">pilot plan</a>.</li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section id="quick-access" class="section section-inner" aria-label="Quick access">
+    <p class="section-kicker">Quick access</p>
+    <h2 class="section-title">Open the rendered brief first; use GitHub for source proof.</h2>
+    <div class="grid">
+      <article class="card red span-4" data-search>
+        <h3>Rendered brief</h3>
+        <p>Use this link when the page needs to display correctly.</p>
+        <a class="card-link" href="https://tsmithcode.github.io/crown-castle-cad-automation-proof/" target="_blank" rel="noopener">Open GitHub Pages →</a>
+      </article>
+      <article class="card blue span-4" data-search>
+        <h3>Source proof</h3>
+        <p>Use the repo for AutoLISP files, sample scope data, README, and implementation notes.</p>
+        <a class="card-link" href="https://github.com/tsmithcode/crown-castle-cad-automation-proof" target="_blank" rel="noopener">Open GitHub repo →</a>
+      </article>
+      <article class="card teal span-4" data-search>
+        <h3>Important note</h3>
+        <p>Normal GitHub HTML file links show source code. The Pages link renders the brief as a web page.</p>
+        <a class="card-link" href="#proof-repo">Review proof links →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="industry hide-focus" aria-label="Core themes">
+    <p class="section-kicker" style="color:#fff">Serving technical teams with implementation discipline</p>
+    <h2 class="section-title">Serving CAD automation with engineering discipline.</h2>
+    <div class="industry-grid">
+      <article class="industry-card" data-search>
+        <h3>Scaling consistent drawing output</h3>
+        <p>Convert structured scope data into repeatable DWG updates while preserving drafting standards, template behavior, and review visibility.</p>
+        <a class="card-link" href="#use-cases">Automation use cases →</a>
+      </article>
+      <article class="industry-card" data-search>
+        <h3>Transforming review workflow</h3>
+        <p>Package each generated drawing with validation results, preview files, change summaries, and explicit uncertainty flags.</p>
+        <a class="card-link" href="#quality">Validation model →</a>
+      </article>
+      <article class="industry-card" data-search>
+        <h3>Powering enterprise integration</h3>
+        <p>Expose automation through secure APIs, queues, versioned rules, and controlled CAD workers that fit existing systems.</p>
+        <a class="card-link" href="#architecture">Reference architecture →</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-inner hide-focus" aria-label="Page map">
+    <p class="section-kicker">Page map</p>
+    <h2 class="section-title">Fast navigation for the conversation.</h2>
+    <div class="mapgrid" data-search>
+      <a href="#context">Public context<small>Crown Castle public facts and language alignment.</small></a>
+      <a href="#alignment">Alignment flow<small>Outcomes, operating principles, and next-step model.</small></a>
+      <a href="#proof-repo">Proof repo<small>GitHub files, AutoLISP proof path, and STAR stories.</small></a>
+      <a href="#architecture">Architecture<small>API, queue, CAD worker, artifacts, review lifecycle.</small></a>
+      <a href="#quality">Quality model<small>Drafter-ready definition, validation stages, risk controls.</small></a>
+      <a href="#pilot">Pilot plan<small>Two-week proof plan and production-readiness criteria.</small></a>
+      <a href="#inputs">Inputs needed<small>Standards, samples, templates, data mappings.</small></a>
+      <a href="#questions">Alignment questions<small>Workflow, data, CAD, integration, governance.</small></a>
+      <a href="#doc-index">Doc index<small>Autodesk, .NET, cloud, data, testing, API docs.</small></a>
+    </div>
+  </section>
+
+  <section id="context" class="section section-inner" aria-label="Public context">
+    <p class="section-kicker">Public context</p>
+    <h2 class="section-title">Language aligned to current public positioning.</h2>
+    <p class="section-subtitle">These facts are included only to keep the brief aligned with public Crown Castle positioning. They are not confidential inputs.</p>
+    <div class="grid">
+      <article class="card purple span-4" data-search>
+        <h3>Focused tower portfolio</h3>
+        <p>Crown Castle publicly describes itself as owning, operating, and leasing approximately 40,000 cell towers across the U.S.</p>
+        <a class="card-link" href="https://investor.crowncastle.com/news-releases/news-release-details/crown-castle-announces-closing-sale-fiber-and-small-cell" target="_blank" rel="noopener">Official release →</a>
+      </article>
+      <article class="card red span-4" data-search>
+        <h3>Post-sale operating focus</h3>
+        <p>On May 1, 2026, Crown Castle announced the close of the sale of its Fiber Solutions and Small Cell businesses and framed the company as a U.S.-focused pure-play tower company.</p>
+        <a class="card-link" href="https://investor.crowncastle.com/news-releases/news-release-details/crown-castle-announces-closing-sale-fiber-and-small-cell" target="_blank" rel="noopener">Transaction context →</a>
+      </article>
+      <article class="card cyan span-4" data-search>
+        <h3>Digital execution relevance</h3>
+        <p>The May 21, 2026 leadership update ties information technology to data, digital, information security, AI, and customer-experience transformation.</p>
+        <a class="card-link" href="https://investor.crowncastle.com/news-releases/news-release-details/crown-castle-names-kris-hinson-chief-commercial-officer-and-mark" target="_blank" rel="noopener">Leadership update →</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="alignment" class="section section-inner" aria-label="Alignment objective">
+    <p class="section-kicker">Alignment objective</p>
+    <h2 class="section-title">Align on outcomes before choosing the automation path.</h2>
+    <div class="grid">
+      <article class="card teal span-7" data-search>
+        <h2>Recommended model</h2>
+        <p class="lead">CAD automation should not simply “draw faster.” It should produce deterministic, reviewable drawing updates with traceable inputs, explicit uncertainty flags, and predictable drafting-standard compliance.</p>
+        <div class="copybox">
+          <button class="copy-btn" type="button">Copy</button>
+          <div class="copy-target">The best implementation path is to treat CAD automation as both a drafting-quality problem and an enterprise software problem. The system should validate scoping inputs, apply agreed drafting standards, update DWGs consistently, generate review artifacts, and make uncertainty visible instead of silently guessing.</div>
+        </div>
+      </article>
+      <article class="card blue span-5" data-search>
+        <h3>Operating principles</h3>
+        <ul class="check tight">
+          <li>Automate repeatable drafting work without bypassing senior drafter judgment.</li>
+          <li>Make automated changes explainable through logs, validation reports, and before/after metadata.</li>
+          <li>Separate business rules from CAD-execution mechanics so rules can evolve safely.</li>
+          <li>Prove quality on narrow cases before expanding the automation surface.</li>
+        </ul>
+      </article>
+    </div>
+    <div class="timeline" style="margin-top:22px" data-search>
+      <article class="step"><h3>Workflow</h3><p>Confirm current intake, source data, drawing standards, review roles, and handoff points.</p></article>
+      <article class="step"><h3>Data</h3><p>Identify required fields, exception patterns, authoritative systems, and approval gates.</p></article>
+      <article class="step"><h3>Automation</h3><p>Select AutoLISP, AutoCAD .NET, ObjectARX, APS Automation, or controlled Windows worker based on compatibility.</p></article>
+      <article class="step"><h3>Validation</h3><p>Define pass / warn / fail outputs, regression cases, metrics, and production readiness.</p></article>
+    </div>
+  </section>
+
+  <section id="proof-repo" class="section section-inner" aria-label="GitHub proof repository">
+    <p class="section-kicker">GitHub proof</p>
+    <h2 class="section-title">Source files that make the implementation concrete.</h2>
+    <p class="section-subtitle">This public repo is a sample proof package, not an official Crown Castle implementation. It shows how I would estimate and de-risk the first automation slice before touching proprietary drawings or systems.</p>
+    <div class="grid">
+      <article class="card blue span-7" data-search>
+        <h2>Proof links</h2>
+        <table>
+          <thead><tr><th>Artifact</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td><a href="https://github.com/tsmithcode/crown-castle-cad-automation-proof" target="_blank" rel="noopener">GitHub repo</a></td><td>Public source proof, README, rendered brief, sample data, and implementation notes.</td></tr>
+            <tr><td><a href="https://github.com/tsmithcode/crown-castle-cad-automation-proof/blob/main/README.md" target="_blank" rel="noopener">README</a></td><td>Package overview, context, AutoCAD quick start, command index, and privacy notes.</td></tr>
+            <tr><td><a href="https://github.com/tsmithcode/crown-castle-cad-automation-proof/blob/main/src/load_all.lsp" target="_blank" rel="noopener">AutoLISP loader</a></td><td>Loads the full command surface into AutoCAD from one entry point.</td></tr>
+            <tr><td><a href="https://github.com/tsmithcode/crown-castle-cad-automation-proof/blob/main/src/single_file_solutions/CC_SCOPECSV_TO_DRAFT.lsp" target="_blank" rel="noopener">CSV-to-draft demo</a></td><td>Reads structured scope rows, validates fields, inserts valid equipment, flags issues, and writes a report.</td></tr>
+            <tr><td><a href="https://github.com/tsmithcode/crown-castle-cad-automation-proof/blob/main/src/single_file_solutions/CC_DWG_VALIDATION_REPORT.lsp" target="_blank" rel="noopener">DWG validation report</a></td><td>Scans required layers, attributes, and unresolved review flags after generation.</td></tr>
+            <tr><td><a href="https://github.com/tsmithcode/crown-castle-cad-automation-proof/blob/main/src/single_file_solutions/CC_NORMALIZE_LEGACY_DWG.lsp" target="_blank" rel="noopener">Legacy normalization routine</a></td><td>Demonstrates conservative, auditable cleanup of known legacy layer aliases.</td></tr>
+            <tr><td><a href="https://github.com/tsmithcode/crown-castle-cad-automation-proof/blob/main/samples/scope_sample.csv" target="_blank" rel="noopener">Sample scope CSV</a></td><td>Uses synthetic rows, including invalid examples, to show the review-first behavior.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <aside class="card teal span-5" data-search>
+        <h3>Zero-friction alignment</h3>
+        <p class="lead">The brief defines the operating model. The repo proves the mechanics are grounded in actual AutoCAD automation patterns.</p>
+        <div class="callout blue"><strong>Access path:</strong> open the rendered brief first, then use the proof repo when technical staff want to inspect file-level behavior.</div>
+      </aside>
+    </div>
+
+    <div class="grid" style="margin-top:22px">
+      <article class="card red span-6" data-search>
+        <p class="label">STAR story 01</p>
+        <h3>Scope data to drafter-ready output</h3>
+        <p><strong>Situation:</strong> CAD updates often start from structured scope data that still needs drafting judgment.</p>
+        <p><strong>Task:</strong> Estimate the first safe slice for automated drawing generation.</p>
+        <p><strong>Action:</strong> Use AutoLISP to read sample CSV rows, validate required fields, place approved blocks, set attributes, and add callouts.</p>
+        <p><strong>Result:</strong> Valid rows become visible drawing updates, while invalid rows are skipped and reported for review.</p>
+      </article>
+      <article class="card teal span-6" data-search>
+        <p class="label">STAR story 02</p>
+        <h3>Validation-first review flags</h3>
+        <p><strong>Situation:</strong> Missing azimuth, elevation, layer, or equipment values can create misleading drawings.</p>
+        <p><strong>Task:</strong> Prevent the automation from making silent engineering assumptions.</p>
+        <p><strong>Action:</strong> Convert missing, conflicting, or uncertain data into visible review flags and CSV report rows.</p>
+        <p><strong>Result:</strong> Drafters see exactly what needs judgment before the package can be treated as ready.</p>
+      </article>
+      <article class="card blue span-6" data-search>
+        <p class="label">STAR story 03</p>
+        <h3>Legacy DWG normalization</h3>
+        <p><strong>Situation:</strong> Historical drawings can drift across layers, symbols, templates, and conventions.</p>
+        <p><strong>Task:</strong> Show a cleanup approach that preserves reviewability.</p>
+        <p><strong>Action:</strong> Map known legacy layer aliases into approved demo layers and write a normalization report.</p>
+        <p><strong>Result:</strong> Cleanup becomes auditable instead of a hidden drawing mutation.</p>
+      </article>
+      <article class="card cyan span-6" data-search>
+        <p class="label">STAR story 04</p>
+        <h3>Production service boundary</h3>
+        <p><strong>Situation:</strong> AutoCAD automation needs enterprise controls when it moves beyond a desktop proof.</p>
+        <p><strong>Task:</strong> Separate CAD execution from orchestration, security, and governance.</p>
+        <p><strong>Action:</strong> Keep AutoLISP focused on deterministic drawing operations and put intake, validation contracts, queues, logging, and status in a service layer.</p>
+        <p><strong>Result:</strong> The pilot path can scale without burying business rules inside drawing scripts.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="use-cases" class="section section-inner" aria-label="Use cases and deliverables">
+    <p class="section-kicker">Use cases</p>
+    <h2 class="section-title">Start where repeatability and reviewability are highest.</h2>
+    <div class="grid">
+      <article class="card blue span-7" data-search>
+        <h2>Likely automation targets</h2>
+        <table>
+          <thead><tr><th>Use case</th><th>Automation focus</th><th>Review focus</th></tr></thead>
+          <tbody>
+            <tr><td>Existing DWG update</td><td>Update equipment, notes, blocks, attributes, title blocks, and callouts from structured scope data.</td><td>Confirm placement, annotation intent, clearance assumptions, and constructability details.</td></tr>
+            <tr><td>Legacy cleanup</td><td>Normalize layers, linetypes, symbols, title block metadata, and template structure.</td><td>Confirm no design intent was lost during cleanup.</td></tr>
+            <tr><td>Template consolidation</td><td>Map inconsistent historical drawings into a current drafting standard.</td><td>Confirm exceptions, jurisdictional variants, and project-specific standards.</td></tr>
+            <tr><td>Validation-first drafting</td><td>Flag missing, conflicting, or uncertain source data before generating misleading output.</td><td>Resolve ambiguous scope fields and approve safe defaults.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="card red span-5" data-search>
+        <h3>Recommended output package</h3>
+        <ol class="tight">
+          <li><strong>Updated DWG</strong> using selected template and rule version.</li>
+          <li><strong>PDF preview</strong> for fast visual review.</li>
+          <li><strong>Validation report</strong> with pass / warn / fail detail.</li>
+          <li><strong>Change summary</strong> describing what changed, why, and what was skipped.</li>
+          <li><strong>Review checklist</strong> converting drafter corrections into regression cases.</li>
+        </ol>
+        <div class="callout teal"><strong>Quality stance:</strong> the automation should stop, warn, or route to review when data quality is insufficient.</div>
+      </article>
+    </div>
+  </section>
+
+  <section id="architecture" class="section section-inner" aria-label="Architecture">
+    <p class="section-kicker">Reference architecture</p>
+    <h2 class="section-title">Expose automation like enterprise software; isolate CAD execution like production infrastructure.</h2>
+    <article class="card plain" data-search>
+      <div class="flow" role="list" aria-label="Architecture flow">
+        <div class="node" role="listitem"><strong>Client or internal system</strong><span>Scope data, project metadata, drawing request, source file pointers.</span></div>
+        <div class="node" role="listitem"><strong>API service</strong><span>Validate contract, create job ID, persist request, enforce authorization.</span></div>
+        <div class="node" role="listitem"><strong>Job queue</strong><span>Decouple traffic, retry safely, control concurrency and status.</span></div>
+        <div class="node" role="listitem"><strong>CAD worker</strong><span>Run AutoLISP, AutoCAD .NET, ObjectARX, APS Automation, or controlled desktop worker.</span></div>
+        <div class="node" role="listitem"><strong>Artifacts + review</strong><span>DWG, PDF, validation report, log, change summary, review state.</span></div>
+      </div>
+      <details open>
+        <summary>Implementation option matrix</summary>
+        <table>
+          <thead><tr><th>Path</th><th>Best fit</th><th>Control point</th></tr></thead>
+          <tbody>
+            <tr><td>AutoLISP automation</td><td>Fast drafting operations inside AutoCAD where commands and drawing standards are established.</td><td>Version scripts, validate inputs, isolate risky commands, log every mutation.</td></tr>
+            <tr><td>AutoCAD .NET API / ObjectARX</td><td>Typed logic, deeper DWG object handling, custom commands, rules engines, and more testable orchestration.</td><td>Separate CAD-specific adapters from business rules and API contracts.</td></tr>
+            <tr><td>APS Automation / Design Automation</td><td>Cloud-executed batch processing when commands, dependencies, fonts, plotting, and add-ins are compatible.</td><td>Confirm work item compatibility, bundle dependencies, output artifacts, and timeout behavior.</td></tr>
+            <tr><td>Controlled Windows CAD worker</td><td>Desktop AutoCAD behavior, specialized plugins, legacy workflows, or gaps not suitable for cloud execution.</td><td>Govern licensing, isolation, desktop session behavior, queueing, cleanup, and observability.</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </article>
+  </section>
+
+  <section id="quality" class="section section-inner" aria-label="Quality model">
+    <p class="section-kicker">Quality model</p>
+    <h2 class="section-title">Drafter-ready means transparent, inspectable, and repeatable.</h2>
+    <div class="grid">
+      <article class="card teal span-6" data-search>
+        <h2>Definition of drafter-ready</h2>
+        <ul class="check tight">
+          <li>DWG uses expected templates, layers, blocks, symbols, annotations, callouts, and title block fields.</li>
+          <li>PDF preview is generated for quick visual inspection.</li>
+          <li>Validation report includes pass / warn / fail conditions with field-level detail.</li>
+          <li>Missing, conflicting, inferred, or manually required values are explicit.</li>
+          <li>Job log includes input version, template version, rule version, and output artifact links.</li>
+        </ul>
+      </article>
+      <article class="card red span-6" data-search>
+        <h2>Risk controls</h2>
+        <ul class="warn tight">
+          <li><strong>Bad input data:</strong> fail early or flag uncertainty instead of guessing.</li>
+          <li><strong>Legacy DWG variation:</strong> classify templates and exceptions before broad automation.</li>
+          <li><strong>CAD environment mismatch:</strong> pin AutoCAD version, fonts, CTB/STB files, dependencies, and add-ins.</li>
+          <li><strong>Silent drafting errors:</strong> require validation reports and visual previews.</li>
+          <li><strong>Rule drift:</strong> version drafting rules, templates, and scope mappings.</li>
+        </ul>
+      </article>
+      <article class="card blue span-12" data-search>
+        <h2>Validation stages</h2>
+        <table>
+          <thead><tr><th>Stage</th><th>Checks</th><th>Output</th></tr></thead>
+          <tbody>
+            <tr><td>Input validation</td><td>Required fields, known equipment types, geometry constraints, source references, conflicting values.</td><td>Reject, warn, or route to review before modifying a DWG.</td></tr>
+            <tr><td>Drawing validation</td><td>Layers, blocks, attributes, symbols, callouts, dimensions, title block fields, annotation placement.</td><td>Standardized issue report tied to job ID and artifact versions.</td></tr>
+            <tr><td>Artifact validation</td><td>DWG saved, PDF plotted, report attached, log created, job status updated.</td><td>Complete review package.</td></tr>
+            <tr><td>Regression validation</td><td>Senior drafter corrections converted into repeatable test cases.</td><td>Quality improves with every review cycle.</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+  </section>
+
+  <section id="pilot" class="section section-inner" aria-label="Pilot plan">
+    <p class="section-kicker">Pilot plan</p>
+    <h2 class="section-title">A narrow proof keeps implementation practical.</h2>
+    <div class="grid">
+      <article class="card red span-8" data-search>
+        <h2>Two-week proof plan</h2>
+        <table>
+          <thead><tr><th>Phase</th><th>Activities</th><th>Deliverable</th></tr></thead>
+          <tbody>
+            <tr><td>Days 1–2</td><td>Confirm one drawing type, two to five sample DWGs, drafting standard, source-data fields, and review rubric.</td><td>Automation scope contract and pass / warn / fail criteria.</td></tr>
+            <tr><td>Days 3–6</td><td>Build intake schema, validation rules, prototype CAD mutation path, and artifact generation.</td><td>Working prototype generating DWG/PDF/report package.</td></tr>
+            <tr><td>Days 7–9</td><td>Run sample set, capture drafter feedback, convert defects into regression cases.</td><td>Defect log, regression set, updated rules.</td></tr>
+            <tr><td>Days 10–14</td><td>Stabilize job API, logging, status handling, retry behavior, and final demo path.</td><td>Pilot review with metrics, risks, expansion plan, and production backlog.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <aside class="card cyan span-4" data-search>
+        <h3>Success metrics</h3>
+        <ul class="check tight">
+          <li>Percentage of sample drawings generated without manual repair.</li>
+          <li>Validation accuracy on known missing/conflicting data.</li>
+          <li>Drafter review time per generated package.</li>
+          <li>Defects by category: data, rule, template, geometry, plotting, environment.</li>
+          <li>Repeatability across sample DWGs and template variants.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section id="inputs" class="section section-inner" aria-label="Inputs needed">
+    <p class="section-kicker">Inputs needed</p>
+    <h2 class="section-title">The right inputs prevent automation from guessing.</h2>
+    <div class="grid">
+      <article class="card teal span-4" data-search><h3>Drawing standards</h3><ul class="tight"><li>Current templates and title blocks.</li><li>Layer, block, linetype, dimension, symbol, and annotation standards.</li><li>Plot settings, CTB/STB, fonts, support files, and sheet conventions.</li></ul></article>
+      <article class="card blue span-4" data-search><h3>Sample set</h3><ul class="tight"><li>Two to five representative DWGs for one use case.</li><li>Known edge cases and historical variations.</li><li>Expected final output or redlined examples.</li></ul></article>
+      <article class="card red span-4" data-search><h3>Source data</h3><ul class="tight"><li>Required fields and authoritative systems.</li><li>Data ownership and update cadence.</li><li>Examples of missing, conflicting, and manually resolved values.</li></ul></article>
+      <article class="card cyan span-4" data-search><h3>Review process</h3><ul class="tight"><li>Who approves generated drawings.</li><li>Which checks are drafter, engineering, construction, or compliance owned.</li><li>How corrections should feed regression tests.</li></ul></article>
+      <article class="card teal span-4" data-search><h3>Integration constraints</h3><ul class="tight"><li>Authentication and authorization expectations.</li><li>File storage and retention policy.</li><li>Queue, API, logging, monitoring, and deployment standards.</li></ul></article>
+      <article class="card blue span-4" data-search><h3>Environment constraints</h3><ul class="tight"><li>AutoCAD version and plugin dependencies.</li><li>Cloud automation compatibility requirements.</li><li>Desktop worker, VM, or container constraints where applicable.</li></ul></article>
+    </div>
+  </section>
+
+  <section id="questions" class="section section-inner" aria-label="Alignment questions">
+    <p class="section-kicker">Alignment questions</p>
+    <h2 class="section-title">Questions that create implementation clarity.</h2>
+    <div class="grid">
+      <article class="card plain span-6" data-search>
+        <h2>Workflow and quality</h2>
+        <ul class="tight">
+          <li>Which drawing type has the highest volume and most consistent rules?</li>
+          <li>Where does current manual review catch most issues?</li>
+          <li>What makes a generated package acceptable for drafter review?</li>
+          <li>What is never safe for automation to infer?</li>
+          <li>Which defects are acceptable warnings versus hard failures?</li>
+        </ul>
+      </article>
+      <article class="card plain span-6" data-search>
+        <h2>Data and integration</h2>
+        <ul class="tight">
+          <li>What system is authoritative for site, asset, equipment, and project metadata?</li>
+          <li>Is source data available as JSON, CSV, database views, APIs, forms, or documents?</li>
+          <li>What authentication, audit, retention, and access-control requirements apply?</li>
+          <li>Should automation run on demand, on schedule, or from a workflow event?</li>
+          <li>Where should generated DWG/PDF/report artifacts live?</li>
+        </ul>
+      </article>
+      <article class="card plain span-6" data-search>
+        <h2>CAD execution</h2>
+        <ul class="tight">
+          <li>Which AutoCAD version and vertical products are required?</li>
+          <li>Are there existing AutoLISP routines, .NET add-ins, ObjectARX modules, scripts, or standards checkers?</li>
+          <li>Are custom fonts, CTB/STB files, xrefs, title blocks, or external dependencies required?</li>
+          <li>Does plotting need to match a desktop environment exactly?</li>
+          <li>Which CAD changes are deterministic enough for automated generation?</li>
+        </ul>
+      </article>
+      <article class="card plain span-6" data-search>
+        <h2>Governance and rollout</h2>
+        <ul class="tight">
+          <li>Who owns drafting rules once they become executable logic?</li>
+          <li>How should template/rule versions be released?</li>
+          <li>What metrics define pilot success?</li>
+          <li>What review queue or approval state is required before production use?</li>
+          <li>What is the safest first team, geography, or drawing type for rollout?</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-inner" aria-label="Production readiness">
+    <p class="section-kicker">Production readiness</p>
+    <h2 class="section-title">Controls to require before scaling.</h2>
+    <div class="statgrid" data-search>
+      <div class="stat"><strong>01</strong><span><b>Versioned rules:</b> templates, source mappings, AutoLISP/.NET logic, and validation rules are released intentionally.</span></div>
+      <div class="stat"><strong>02</strong><span><b>Observable jobs:</b> every request has status, logs, artifacts, error category, timing, and retry behavior.</span></div>
+      <div class="stat"><strong>03</strong><span><b>Review loop:</b> drafter corrections become regression tests, not one-off tribal knowledge.</span></div>
+    </div>
+  </section>
+
+  <section class="section section-inner" aria-label="Session notes">
+    <p class="section-kicker">Session notes</p>
+    <h2 class="section-title">Capture action items without changing the shared brief.</h2>
+    <div class="grid">
+      <article class="card plain span-4" data-search>
+        <h3>What we heard</h3>
+        <textarea class="notes" data-store="cc-client-what-we-heard" aria-label="What we heard notes" placeholder="Capture confirmed workflow facts, constraints, and priorities…"></textarea>
+      </article>
+      <article class="card plain span-4" data-search>
+        <h3>Open items</h3>
+        <textarea class="notes" data-store="cc-client-open-items" aria-label="Open items notes" placeholder="Capture documents, samples, owners, and decisions still needed…"></textarea>
+      </article>
+      <article class="card plain span-4" data-search>
+        <h3>Next steps</h3>
+        <textarea class="notes" data-store="cc-client-next-steps" aria-label="Next steps notes" placeholder="Capture agreed follow-up, pilot scope, and scheduling details…"></textarea>
+      </article>
+    </div>
+    <p class="small">Notes are stored locally in the browser using localStorage. They are not embedded into the HTML file when the file is shared.</p>
+  </section>
+
+  <section id="doc-index" class="section section-inner" aria-label="Document index">
+    <p class="section-kicker">Document index</p>
+    <h2 class="section-title">Expected stack quick-open index.</h2>
+    <p class="section-subtitle">Use this section to pull up official documentation quickly during technical alignment. Links open in a new tab.</p>
+    <div class="docgrid" data-search>
+      <article class="docblock"><h3>Crown Castle public context</h3><a href="https://www.crowncastle.com/" target="_blank" rel="noopener">Crown Castle website</a><small>Company pages and public navigation.</small><a href="https://investor.crowncastle.com/news-releases/news-release-details/crown-castle-announces-closing-sale-fiber-and-small-cell" target="_blank" rel="noopener">Sale closing release</a><small>Public tower-focused context.</small><a href="https://investor.crowncastle.com/news-releases/news-release-details/crown-castle-names-kris-hinson-chief-commercial-officer-and-mark" target="_blank" rel="noopener">Leadership update</a><small>CIO, data, digital, security, AI language.</small></article>
+      <article class="docblock"><h3>Autodesk CAD APIs</h3><a href="https://aps.autodesk.com/developer/overview/autocad-api" target="_blank" rel="noopener">AutoCAD API overview</a><small>AutoCAD API on APS overview.</small><a href="https://aps.autodesk.com/en/docs/design-automation/v3" target="_blank" rel="noopener">APS Automation API v3</a><small>Cloud design-file automation docs.</small><a href="https://aps.autodesk.com/en/docs/design-automation/v3/tutorials/autocad/about_this_tutorial" target="_blank" rel="noopener">AutoCAD automation walkthrough</a><small>Run custom commands against drawings.</small></article>
+      <article class="docblock"><h3>AutoCAD customization</h3><a href="https://help.autodesk.com/view/OARX/2026/ENU/" target="_blank" rel="noopener">AutoCAD 2026 Developer & ObjectARX</a><small>Developer/customization hub.</small><a href="https://aps.autodesk.com/developer/overview/objectarx-autocad-sdk" target="_blank" rel="noopener">ObjectARX SDK overview</a><small>Native and managed AutoCAD extension path.</small><a href="https://help.autodesk.com/view/ACD/2026/ENU/?guid=GUID-A0E9D801-8BE9-4BF1-85E8-3807E15F3B71" target="_blank" rel="noopener">AutoLISP introduction</a><small>AutoLISP language and workflow docs.</small></article>
+      <article class="docblock"><h3>.NET and VS Code</h3><a href="https://code.visualstudio.com/docs/csharp/testing" target="_blank" rel="noopener">VS Code C# testing</a><small>C# Dev Kit Test Explorer path.</small><a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test" target="_blank" rel="noopener">dotnet test</a><small>.NET CLI test command.</small><a href="https://learn.microsoft.com/en-us/dotnet/core/testing/" target="_blank" rel="noopener">Testing in .NET</a><small>Unit testing and CLI overview.</small></article>
+      <article class="docblock"><h3>API services</h3><a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/apis" target="_blank" rel="noopener">ASP.NET Core APIs</a><small>HTTP API options.</small><a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis" target="_blank" rel="noopener">Minimal APIs quick reference</a><small>Minimal API route-handler reference.</small><a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/openapi/include-metadata" target="_blank" rel="noopener">ASP.NET Core OpenAPI</a><small>Metadata and OpenAPI generation.</small></article>
+      <article class="docblock"><h3>Test frameworks</h3><a href="https://xunit.net/" target="_blank" rel="noopener">xUnit</a><small>Common .NET test framework.</small><a href="https://docs.nunit.org/" target="_blank" rel="noopener">NUnit docs</a><small>Assertions, fixtures, adapters.</small><a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-mstest-intro" target="_blank" rel="noopener">MSTest intro</a><small>Microsoft test framework path.</small></article>
+      <article class="docblock"><h3>Queues and cloud</h3><a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html" target="_blank" rel="noopener">AWS SQS Developer Guide</a><small>Managed message queue service.</small><a href="https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview" target="_blank" rel="noopener">Azure Service Bus</a><small>Enterprise messaging and queues.</small><a href="https://learn.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction" target="_blank" rel="noopener">Azure Queue Storage</a><small>Simple storage-backed queues.</small></article>
+      <article class="docblock"><h3>Contracts and data</h3><a href="https://spec.openapis.org/oas/latest.html" target="_blank" rel="noopener">OpenAPI Specification</a><small>HTTP API contract standard.</small><a href="https://json-schema.org/learn/getting-started-step-by-step" target="_blank" rel="noopener">JSON Schema guide</a><small>Input contract validation.</small><a href="https://learn.microsoft.com/en-us/sql/sql-server/" target="_blank" rel="noopener">SQL Server docs</a><small>Relational database docs.</small><a href="https://www.postgresql.org/docs/" target="_blank" rel="noopener">PostgreSQL docs</a><small>Relational database docs.</small></article>
+      <article class="docblock"><h3>Web and runtime</h3><a href="https://nodejs.org/docs/latest/api/" target="_blank" rel="noopener">Node.js API docs</a><small>Runtime API reference.</small><a href="https://www.typescriptlang.org/docs/" target="_blank" rel="noopener">TypeScript docs</a><small>Language and configuration docs.</small><a href="https://docs.spring.io/spring-boot/index.html" target="_blank" rel="noopener">Spring Boot docs</a><small>Java service framework docs.</small></article>
+      <article class="docblock"><h3>Delivery and operations</h3><a href="https://docs.docker.com/" target="_blank" rel="noopener">Docker docs</a><small>Images, containers, and deployment packaging.</small><a href="https://docs.github.com/actions" target="_blank" rel="noopener">GitHub Actions</a><small>CI/CD workflow docs.</small><a href="https://git-scm.com/docs" target="_blank" rel="noopener">Git documentation</a><small>Source control reference.</small></article>
+      <article class="docblock"><h3>Security and reliability</h3><a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noopener">OWASP ASVS</a><small>Application security verification model.</small><a href="https://learn.microsoft.com/en-us/azure/architecture/framework/" target="_blank" rel="noopener">Azure Well-Architected Framework</a><small>Cloud workload reliability guidance.</small><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener">AWS Well-Architected Framework</a><small>Cloud architecture review framework.</small></article>
+      <article class="docblock"><h3>CAD standards helpers</h3><a href="https://help.autodesk.com/view/ACD/2026/ENU/" target="_blank" rel="noopener">AutoCAD 2026 Help</a><small>Product help and drafting behavior reference.</small><a href="https://aps.autodesk.com/developer/overview/autocad-dxf-archive" target="_blank" rel="noopener">DXF Reference entry point</a><small>Autodesk DXF reference archive and entry point.</small><a href="https://aps.autodesk.com/automation-apis" target="_blank" rel="noopener">Autodesk Automation APIs</a><small>Batch processing and drawing generation overview.</small></article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p><strong>Prepared by CAD Guardian LLC.</strong> Technical alignment brief for CAD automation. This is not an official Crown Castle document and contains no proprietary Crown Castle project data.</p>
+    <p class="small"><strong>Legal and privacy:</strong> This page is an unofficial technical alignment artifact. The linked GitHub repository contains synthetic sample data and demonstration AutoLISP files. It does not include proprietary Crown Castle drawings, source systems, credentials, private project data, analytics, tracking scripts, or credential capture. Notes typed into the session-note fields are stored only in the viewer's browser using localStorage and are not transmitted to CAD Guardian, Crown Castle, GitHub, or the repository.</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  const $ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const body = document.body;
+  const search = document.getElementById('search');
+  const count = document.getElementById('resultCount');
+  const searchItems = $('[data-search]');
+  function setPressed(id, on){ const b=document.getElementById(id); if(b) b.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+  function filter(){
+    const q = (search?.value || '').trim().toLowerCase();
+    let hits = 0;
+    searchItems.forEach(el => {
+      el.classList.remove('search-miss','search-hit');
+      if(!q){ return; }
+      const text = el.innerText.toLowerCase();
+      if(text.includes(q)){ el.classList.add('search-hit'); hits++; }
+      else { el.classList.add('search-miss'); }
+    });
+    if(count) count.textContent = q ? `${hits} section${hits===1?'':'s'} shown` : 'Ready';
+  }
+  if(search){
+    search.addEventListener('input', filter);
+    document.addEventListener('keydown', (e) => {
+      if(e.key === '/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){ e.preventDefault(); search.focus(); }
+      if(e.key === 'Escape' && document.activeElement === search){ search.value=''; filter(); search.blur(); }
+    });
+  }
+  const clear = document.getElementById('clearSearch'); if(clear) clear.addEventListener('click', () => { search.value=''; filter(); search.focus(); });
+  const focus = document.getElementById('focusBtn'); if(focus) focus.addEventListener('click', () => { body.classList.toggle('focus'); setPressed('focusBtn', body.classList.contains('focus')); });
+  const large = document.getElementById('largeBtn'); if(large) large.addEventListener('click', () => { body.classList.toggle('large'); setPressed('largeBtn', body.classList.contains('large')); });
+  const contrast = document.getElementById('contrastBtn'); if(contrast) contrast.addEventListener('click', () => { body.classList.toggle('contrast'); setPressed('contrastBtn', body.classList.contains('contrast')); });
+  const print = document.getElementById('printBtn'); if(print) print.addEventListener('click', () => window.print());
+  $('.copy-btn').forEach(btn => btn.addEventListener('click', async () => {
+    const box = btn.closest('.copybox') || btn.parentElement;
+    const target = box?.querySelector('.copy-target');
+    const text = target ? target.innerText : '';
+    try{
+      await navigator.clipboard.writeText(text.trim());
+      const old = btn.textContent; btn.textContent = 'Copied'; setTimeout(()=>btn.textContent=old, 1100);
+    }catch(e){
+      const range = document.createRange(); range.selectNodeContents(target); const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+    }
+  }));
+  $('.notes').forEach(area => {
+    const key = area.getAttribute('data-store');
+    if(!key) return;
+    area.value = localStorage.getItem(key) || '';
+    area.addEventListener('input', () => localStorage.setItem(key, area.value));
+  });
+})();
+</script>
+</body>
+</html>
