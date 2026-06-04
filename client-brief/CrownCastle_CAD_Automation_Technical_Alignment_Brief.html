@@ -187,9 +187,12 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
       <a href="#alignment">Alignment flow<small>Outcomes, operating principles, and next-step model.</small></a>
       <a href="#proof-repo">Proof repo<small>GitHub files, AutoLISP proof path, and STAR stories.</small></a>
       <a href="#discussion-update">Technical update<small>What the technical discussion clarified about the real implementation target.</small></a>
+      <a href="#target-use-case">Target use case<small>Order-number driven DWG/PDF/JSON automation flow.</small></a>
       <a href="#aws-architecture">AWS service map<small>API Gateway, S3, Step Functions, SQS, worker, logs, audit.</small></a>
       <a href="#architecture">Architecture<small>API, queue, CAD worker, artifacts, review lifecycle.</small></a>
       <a href="#quality">Quality model<small>Drafter-ready definition, validation stages, risk controls.</small></a>
+      <a href="#delivery-readiness">Delivery readiness<small>Small-team delivery, CI/CD, quality gates, observability.</small></a>
+      <a href="#ai-governance">AI governance<small>Where AI helps, where it must stay constrained.</small></a>
       <a href="#pilot">Pilot plan<small>Two-week proof plan and production-readiness criteria.</small></a>
       <a href="#inputs">Inputs needed<small>Standards, samples, templates, data mappings.</small></a>
       <a href="#questions">Alignment questions<small>Workflow, data, CAD, integration, governance.</small></a>
@@ -382,6 +385,52 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
     </div>
   </section>
 
+  <section id="target-use-case" class="section section-inner" aria-label="Target use case">
+    <p class="section-kicker">Target use case</p>
+    <h2 class="section-title">Order-number intake should return a review-ready CAD package, not a mystery drawing.</h2>
+    <p class="section-subtitle">The cloud application should hide source-system complexity from the lay user while preserving enough evidence for drafters and engineers to trust the generated result.</p>
+    <div class="grid">
+      <article class="card red span-6" data-search>
+        <h2>Input contract</h2>
+        <p>A user enters an order number. Upstream systems gather the approved input package so the automation does not need to scrape, guess, or ask the user to understand CAD file structure.</p>
+        <ul class="tight">
+          <li>Template DWG and source DWGs.</li>
+          <li>PDF references and customer/source documents.</li>
+          <li>JSON metadata for DWG properties, title blocks, equipment, and site context.</li>
+          <li>Statement of work or normalized rule set that drives drawing mutations.</li>
+          <li>Versioned rule, template, and input-package identifiers.</li>
+        </ul>
+      </article>
+      <article class="card teal span-6" data-search>
+        <h2>Automation responsibilities</h2>
+        <p>The worker should run deterministic drawing operations first, then produce explicit review flags for data that cannot be trusted yet.</p>
+        <ul class="tight">
+          <li>Insert source DWGs into the selected template at controlled insertion points.</li>
+          <li>Load JSON values into DWG properties, title blocks, attributes, and metadata fields.</li>
+          <li>Apply SOW-driven mutations for layers, symbols, callouts, annotations, and equipment placement.</li>
+          <li>Plot PDF preview and package DWG, report, logs, and reviewer notes.</li>
+          <li>Separate generated, assumed, missing, and conflicting drawing elements.</li>
+        </ul>
+      </article>
+      <article class="card blue span-12" data-search>
+        <h2>Key drafting uncertainty to model</h2>
+        <table>
+          <thead><tr><th>Situation</th><th>Automation behavior</th><th>Reviewer evidence</th></tr></thead>
+          <tbody>
+            <tr><td>Antenna or radio is known at an elevation but face/position is ambiguous.</td><td>Place only when the rule is deterministic; otherwise flag the exact missing location data.</td><td>Confidence flag with source field, parsed value, and unresolved position/azimuth note.</td></tr>
+            <tr><td>Customer document says position 2 but source data does not define the position model.</td><td>Do not silently map position 2 to a drawing location.</td><td>Visible review marker and report row explaining that position semantics are undefined.</td></tr>
+            <tr><td>Ground equipment source data is incomplete or conflicts across systems.</td><td>Generate validated pieces and route uncertain equipment to review.</td><td>Source conflict summary, skipped/assumed fields, and required drafter decision.</td></tr>
+            <tr><td>Legacy DWG/template variation breaks a rule.</td><td>Classify as template/rule drift, not a generic CAD failure.</td><td>Template version, rule version, failing object, and suggested remediation path.</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+    <div class="copybox">
+      <button class="copy-btn" type="button">Copy</button>
+      <div class="copy-target">Target implementation: enter an order number, gather the approved DWG/PDF/JSON/SOW input package, run an asynchronous CAD automation job, return a DWG/PDF/report bundle, and make every assumption or conflict visible to the drafter.</div>
+    </div>
+  </section>
+
   <section id="aws-architecture" class="section section-inner" aria-label="AWS architecture">
     <p class="section-kicker">AWS service map</p>
     <h2 class="section-title">AWS-native architecture for an API-callable CAD automation platform.</h2>
@@ -404,6 +453,35 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
         <div class="aws-step" role="listitem"><strong><a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/" target="_blank" rel="noopener">CloudWatch</a> + <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html" target="_blank" rel="noopener">CloudTrail</a></strong><span>Metrics, logs, alarms, API audit trail, traceability.</span></div>
       </div>
     </article>
+
+    <div class="grid">
+      <article class="card blue span-7" data-search>
+        <h2>Preferred deployment shape</h2>
+        <table>
+          <thead><tr><th>Layer</th><th>AWS choice</th><th>Reason</th></tr></thead>
+          <tbody>
+            <tr><td>Internal UI</td><td>CloudFront + S3 static site, Amplify, or internal platform UI</td><td>Lightweight order/status experience; keep CAD work off the browser.</td></tr>
+            <tr><td>API</td><td>API Gateway + Lambda for thin endpoints, or ALB + ECS/EKS for service teams</td><td>Use the standard platform pattern; keep request handling separate from CAD execution.</td></tr>
+            <tr><td>Job state</td><td>DynamoDB for job state; RDS/Aurora when relational reporting matters</td><td>Track status, idempotency, rule version, artifact pointers, and reviewer state.</td></tr>
+            <tr><td>Orchestration</td><td>Step Functions</td><td>Make stages, retries, timeouts, and exception routing explicit.</td></tr>
+            <tr><td>Broker</td><td>SQS</td><td>Service-bus-style decoupling between intake and long-running CAD workers.</td></tr>
+            <tr><td>Worker runtime</td><td>EC2 Windows, ECS/Fargate, EKS, APS Automation, or hybrid</td><td>Choose after proving AutoCAD/runtime/licensing constraints.</td></tr>
+          </tbody>
+        </table>
+      </article>
+      <article class="card teal span-5" data-search>
+        <h2>State machine stages</h2>
+        <ol class="tight">
+          <li>Validate order request and authorization.</li>
+          <li>Create job ID and freeze input package versions.</li>
+          <li>Preflight templates, fonts, plot styles, xrefs, and rules.</li>
+          <li>Run CAD worker with idempotent job payload.</li>
+          <li>Validate DWG mutations, metadata, and plotted output.</li>
+          <li>Write artifact bundle and notify the reviewer.</li>
+          <li>Capture review decision and convert corrections into regression tests.</li>
+        </ol>
+      </article>
+    </div>
 
     <div class="service-grid" data-search>
       <article class="service-card">
@@ -438,6 +516,22 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
         <strong><a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/" target="_blank" rel="noopener">Amazon CloudWatch</a></strong>
         <p>Use for job metrics, structured logs, dashboards, alarms, and operational visibility across services and workers.</p>
       </article>
+      <article class="service-card">
+        <strong><a href="https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html" target="_blank" rel="noopener">Amazon EventBridge</a></strong>
+        <p>Use for workflow events such as package-ready, job-failed, review-needed, or artifact-approved.</p>
+      </article>
+      <article class="service-card">
+        <strong><a href="https://docs.aws.amazon.com/sns/latest/dg/welcome.html" target="_blank" rel="noopener">Amazon SNS</a></strong>
+        <p>Use for simple notification fanout when reviewers or downstream systems need job-state updates.</p>
+      </article>
+      <article class="service-card">
+        <strong><a href="https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html" target="_blank" rel="noopener">AWS X-Ray</a></strong>
+        <p>Use when distributed traces are needed across API, orchestration, and worker handoffs.</p>
+      </article>
+      <article class="service-card">
+        <strong><a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html" target="_blank" rel="noopener">AWS CodePipeline</a></strong>
+        <p>Use if AWS-native CI/CD is preferred; GitHub Actions can also drive checks and deployments.</p>
+      </article>
     </div>
 
     <div class="grid">
@@ -463,6 +557,20 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
         <div class="callout purple"><strong>Production stance:</strong> the architecture should protect proprietary data while still giving reviewers enough evidence to trust the generated package.</div>
       </article>
     </div>
+
+    <article class="card plain" data-search>
+      <h2>First architecture questions to qualify</h2>
+      <table>
+        <thead><tr><th>Question</th><th>Why it matters</th><th>Decision it unlocks</th></tr></thead>
+        <tbody>
+          <tr><td>Is the internal platform standard ECS/Fargate, EKS, EC2, Lambda, or mixed?</td><td>Prevents designing against the wrong operating model.</td><td>API and worker hosting pattern.</td></tr>
+          <tr><td>Does the automation require full desktop AutoCAD behavior?</td><td>Determines whether cloud-native containers are enough.</td><td>Windows worker vs container vs APS/hybrid.</td></tr>
+          <tr><td>Which fields must never be inferred?</td><td>Protects drawing trust and reviewer confidence.</td><td>Hard-fail, warning, or review-routing rules.</td></tr>
+          <tr><td>What is the acceptable runtime per order?</td><td>Sets queue visibility timeout, worker scale, SLA, and notification behavior.</td><td>SQS/Step Functions timeout and concurrency strategy.</td></tr>
+          <tr><td>Where should proprietary packages live and for how long?</td><td>Defines storage, retention, audit, and access boundaries.</td><td>S3 bucket policy, KMS, lifecycle, and reviewer permissions.</td></tr>
+        </tbody>
+      </table>
+    </article>
   </section>
 
   <section id="architecture" class="section section-inner" aria-label="Architecture">
@@ -526,6 +634,81 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
             <tr><td>Regression validation</td><td>Senior drafter corrections converted into repeatable test cases.</td><td>Quality improves with every review cycle.</td></tr>
           </tbody>
         </table>
+      </article>
+    </div>
+  </section>
+
+  <section id="delivery-readiness" class="section section-inner" aria-label="Delivery readiness">
+    <p class="section-kicker">Delivery readiness</p>
+    <h2 class="section-title">Small-team speed comes from clear ownership, thin PRs, and visible proof.</h2>
+    <p class="section-subtitle">For a tight timeline, the delivery model should reduce overlap while keeping the CAD specialist, platform engineer, and reviewer aligned around the same evidence.</p>
+    <div class="grid">
+      <article class="card red span-4" data-search>
+        <h3>Team operating model</h3>
+        <ul class="tight">
+          <li>Define ownership by module, namespace, API boundary, and CAD command surface.</li>
+          <li>Keep PRs small enough that review scope is obvious from the file list.</li>
+          <li>Use a visible milestone board for intake, worker, validation, review, and deployment.</li>
+          <li>Hold short check-ins around blockers, risk, and proof, not status theater.</li>
+        </ul>
+      </article>
+      <article class="card blue span-4" data-search>
+        <h3>CI/CD quality gates</h3>
+        <ul class="tight">
+          <li>Lint/static checks for API and service code.</li>
+          <li>Unit tests for parsing, validation, rule selection, and confidence flags.</li>
+          <li>Regression tests from drafter corrections and known drawing defects.</li>
+          <li>Integration smoke test that runs a sample job and verifies artifacts.</li>
+        </ul>
+      </article>
+      <article class="card teal span-4" data-search>
+        <h3>Observability contract</h3>
+        <ul class="tight">
+          <li>Log job ID, order number, input hash, template version, rule version, worker version, and artifact links.</li>
+          <li>Track counts of generated, assumed, conflicting, missing, skipped, and failed items.</li>
+          <li>Alarm on queue age, worker failures, validation failures, and artifact packaging errors.</li>
+          <li>Return clean user errors and detailed developer diagnostics.</li>
+        </ul>
+      </article>
+      <article class="card plain span-12" data-search>
+        <h2>Modern SDLC answer in one table</h2>
+        <table>
+          <thead><tr><th>Gate</th><th>Example checks</th><th>Why it matters here</th></tr></thead>
+          <tbody>
+            <tr><td>Plan</td><td>Scope contract, acceptance criteria, definition of drafter-ready.</td><td>Prevents a broad rewrite and keeps the first release focused on deterministic value.</td></tr>
+            <tr><td>Build</td><td>Small PRs, clear file ownership, code review, dependency control.</td><td>Helps a small team move fast without stepping on the same assemblies, modules, or rules.</td></tr>
+            <tr><td>Test</td><td>Unit, regression, integration, end-to-end, and CAD artifact smoke tests.</td><td>Stops drawing defects from hiding behind a green web-service deploy.</td></tr>
+            <tr><td>Release</td><td>GitHub Actions, Azure DevOps, or AWS CodePipeline with environment gates.</td><td>Makes deployments repeatable and ties releases to rule/template versions.</td></tr>
+            <tr><td>Operate</td><td>CloudWatch logs/metrics/alarms, CloudTrail audit, optional X-Ray traces.</td><td>Shows what happened for each order and where human judgment was required.</td></tr>
+          </tbody>
+        </table>
+      </article>
+    </div>
+  </section>
+
+  <section id="ai-governance" class="section section-inner" aria-label="AI governance">
+    <p class="section-kicker">AI governance</p>
+    <h2 class="section-title">AI can accelerate delivery, but CAD truth still needs governed sources and human review.</h2>
+    <div class="grid">
+      <article class="card teal span-6" data-search>
+        <h2>Good uses</h2>
+        <ul class="check tight">
+          <li>Summarize public docs, internal runbooks, and approved non-sensitive requirements.</li>
+          <li>Draft test cases, validation matrices, and code-review checklists.</li>
+          <li>Generate synthetic sample data for demos and regression tests.</li>
+          <li>Assist with narrow code scaffolds when reviewed through normal PR gates.</li>
+          <li>Compare validation reports and identify recurring defect categories.</li>
+        </ul>
+      </article>
+      <article class="card red span-6" data-search>
+        <h2>Guardrails</h2>
+        <ul class="warn tight">
+          <li>No proprietary drawings, private source-system data, credentials, or client files in public AI tools.</li>
+          <li>No silent AI-generated drawing decisions without source provenance and review flags.</li>
+          <li>No broad agentic writes against production repositories, buckets, or CAD libraries without approval gates.</li>
+          <li>No generated code bypassing dependency review, tests, security review, or human code review.</li>
+          <li>Keep prompts, assumptions, and outputs auditable when AI influences delivery artifacts.</li>
+        </ul>
       </article>
     </div>
   </section>
@@ -663,6 +846,7 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
       <article class="docblock"><h3>AWS architecture docs</h3><a href="https://docs.aws.amazon.com/apigateway/" target="_blank" rel="noopener">Amazon API Gateway</a><small>Job submission and status API front door.</small><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/" target="_blank" rel="noopener">Amazon S3</a><small>Input/output artifact packages.</small><a href="https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html" target="_blank" rel="noopener">AWS Step Functions</a><small>Multi-stage workflow orchestration.</small></article>
       <article class="docblock"><h3>AWS queue and worker docs</h3><a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html" target="_blank" rel="noopener">Amazon SQS</a><small>Async broker / service-bus style queue.</small><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-configuration.html" target="_blank" rel="noopener">Amazon ECS / Fargate</a><small>Containerized service and worker path.</small><a href="https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html" target="_blank" rel="noopener">Amazon EKS</a><small>Kubernetes-managed worker path.</small></article>
       <article class="docblock"><h3>AWS observability and security</h3><a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/" target="_blank" rel="noopener">Amazon CloudWatch</a><small>Logs, metrics, dashboards, and alarms.</small><a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html" target="_blank" rel="noopener">AWS CloudTrail</a><small>API activity and audit trail.</small><a href="https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html" target="_blank" rel="noopener">AWS Secrets Manager</a><small>Credential storage and rotation.</small></article>
+      <article class="docblock"><h3>AWS events and delivery</h3><a href="https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html" target="_blank" rel="noopener">Amazon EventBridge</a><small>Workflow events and routing.</small><a href="https://docs.aws.amazon.com/sns/latest/dg/welcome.html" target="_blank" rel="noopener">Amazon SNS</a><small>Notification fanout.</small><a href="https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html" target="_blank" rel="noopener">AWS X-Ray</a><small>Distributed tracing.</small><a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/welcome.html" target="_blank" rel="noopener">AWS CodePipeline</a><small>AWS-native release pipelines.</small></article>
       <article class="docblock"><h3>Queues and cloud</h3><a href="https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview" target="_blank" rel="noopener">Azure Service Bus</a><small>Enterprise messaging and queues.</small><a href="https://learn.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction" target="_blank" rel="noopener">Azure Queue Storage</a><small>Simple storage-backed queues.</small><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener">AWS Well-Architected Framework</a><small>Cloud architecture review framework.</small></article>
       <article class="docblock"><h3>Contracts and data</h3><a href="https://spec.openapis.org/oas/latest.html" target="_blank" rel="noopener">OpenAPI Specification</a><small>HTTP API contract standard.</small><a href="https://json-schema.org/learn/getting-started-step-by-step" target="_blank" rel="noopener">JSON Schema guide</a><small>Input contract validation.</small><a href="https://learn.microsoft.com/en-us/sql/sql-server/" target="_blank" rel="noopener">SQL Server docs</a><small>Relational database docs.</small><a href="https://www.postgresql.org/docs/" target="_blank" rel="noopener">PostgreSQL docs</a><small>Relational database docs.</small></article>
       <article class="docblock"><h3>Web and runtime</h3><a href="https://nodejs.org/docs/latest/api/" target="_blank" rel="noopener">Node.js API docs</a><small>Runtime API reference.</small><a href="https://www.typescriptlang.org/docs/" target="_blank" rel="noopener">TypeScript docs</a><small>Language and configuration docs.</small><a href="https://docs.spring.io/spring-boot/index.html" target="_blank" rel="noopener">Spring Boot docs</a><small>Java service framework docs.</small></article>

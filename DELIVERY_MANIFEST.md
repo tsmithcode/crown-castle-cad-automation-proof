@@ -15,8 +15,8 @@
 | `src/` | AutoLISP technical proof commands. | Public-safe sample code |
 | `samples/scope_sample.csv` | Synthetic scope data for the CSV-to-draft proof. | Public-safe sample data |
 | `docs/CODE_WALKTHROUGH.md` | File-level source walkthrough. | Public-safe |
-| `docs/AWS_ARCHITECTURE.md` | AWS service map and CAD worker runtime decision addendum. | Public-safe |
-| `docs/TECHNICAL_ALIGNMENT_NOTES.md` | Concise proof narrative and production boundary notes. | Public-safe |
+| `docs/AWS_ARCHITECTURE.md` | AWS service map, target order-number use case, worker runtime decision, SDLC, and observability addendum. | Public-safe |
+| `docs/TECHNICAL_ALIGNMENT_NOTES.md` | Concise proof narrative, production boundary notes, confidence model, and AI governance. | Public-safe |
 | `docs/runbook.md` | Access and validation runbook. | Public-safe |
 | `docs/sanitization-checklist.md` | Public release checklist. | Public-safe |
 | `scripts/verify_readiness.py` | Local readiness and sanitization scan. | Public-safe |
@@ -40,5 +40,5 @@ https://tsmithcode.github.io/crown-castle-cad-automation-proof/
 GitHub source proof:
 https://github.com/tsmithcode/crown-castle-cad-automation-proof
 
-The brief frames an estimated implementation path for drafter-ready CAD automation: structured scope data, AutoLISP drawing execution, AWS/API orchestration, validation reports, review flags, and a practical pilot path. The repo contains sample AutoLISP proof files only; it does not include proprietary Crown Castle project data.
+The brief frames an estimated implementation path for drafter-ready CAD automation: order-number intake, structured scope data, AutoLISP drawing execution, AWS/API orchestration, queue-backed CAD workers, validation reports, review flags, SDLC/observability controls, and a practical pilot path. The repo contains sample AutoLISP proof files only; it does not include proprietary Crown Castle project data.
 ```

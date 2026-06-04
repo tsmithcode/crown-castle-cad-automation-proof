@@ -37,6 +37,8 @@ The person and recipient details above are package context provided for this pro
 - Cleaning legacy drawings conservatively.
 - Drawing the line between AutoLISP and a larger C#/.NET/API/AWS service layer.
 - Mapping an AWS-native architecture for API Gateway, S3, Step Functions, SQS, CAD workers, CloudWatch, CloudTrail, KMS, and Secrets Manager.
+- Framing the order-number driven cloud use case: template DWG, source DWGs, PDFs, JSON, SOW/rules, CAD worker, and review package.
+- Naming the delivery controls: small PRs, CI/CD gates, regression tests, observability, audit, and AI governance.
 
 ## Repo Structure
 
@@ -46,6 +48,7 @@ The person and recipient details above are package context provided for this pro
 |-- client-brief/
 |   `-- CrownCastle_CAD_Automation_Technical_Alignment_Brief.html
 |-- docs/
+|   |-- AWS_ARCHITECTURE.md
 |   |-- CODE_WALKTHROUGH.md
 |   |-- TECHNICAL_ALIGNMENT_NOTES.md
 |   |-- runbook.md
@@ -105,6 +108,20 @@ Internal UI -> API Gateway / API service -> job record -> S3 input package -> St
 ```
 
 See [`docs/AWS_ARCHITECTURE.md`](docs/AWS_ARCHITECTURE.md) for the concise service map, worker-runtime decision matrix, and early qualification questions.
+
+## Target Cloud Use Case
+
+The production shape is an internal app where a user enters an order number and receives a generated review package. Upstream systems provide the approved input bundle:
+
+```text
+template DWG + source DWGs + PDFs + JSON + SOW/rules -> CAD worker -> DWG/PDF/report/log review package
+```
+
+The key quality requirement is confidence-aware output. If asset data is incomplete or ambiguous, the system should flag it as source-of-truth driven, rule-derived, assumed, conflicting, missing, or blocked for human judgment.
+
+## Delivery And Governance
+
+For a tight small-team delivery window, the repo frames a practical operating model: module ownership, small PRs, CI/CD checks, regression tests from drafter corrections, structured CloudWatch logs, CloudTrail audit evidence, and AI usage boundaries that keep proprietary drawings and private source-system data out of public AI tools.
 
 ## Core Technical Stance
 
