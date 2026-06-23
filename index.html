@@ -65,7 +65,7 @@ table{width:100%;max-width:100%;border-collapse:separate;border-spacing:0;border
   <span>CAD automation technical alignment brief · prepared by CAD Guardian LLC for Crown Castle.</span>
   <a class="topbar-button" href="https://github.com/tsmithcode/crown-castle-cad-automation-proof" target="_blank" rel="noopener">PROOF REPO</a>
   <a class="topbar-button" href="#doc-index">DOC INDEX</a>
-  <a class="topbar-button" href="meeting-cockpit.html">MEETING COCKPIT</a>
+  <a class="topbar-button" href="solution-alignment.html">SOLUTION ALIGNMENT</a>
   <span class="topbar-x" aria-hidden="true">×</span>
 </div>
 <header class="hero-shell" aria-labelledby="page-title">
@@ -128,7 +128,7 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
         <ol class="tight">
           <li>Open the <a href="https://tsmithcode.github.io/crown-castle-cad-automation-proof/" target="_blank" rel="noopener">rendered brief</a>.</li>
           <li>Open the <a href="https://github.com/tsmithcode/crown-castle-cad-automation-proof" target="_blank" rel="noopener">source proof repo</a>.</li>
-          <li>Open the <a href="meeting-cockpit.html">protected meeting cockpit</a>.</li>
+          <li>Open the <a href="solution-alignment.html">access-gated Solution Alignment Brief</a>.</li>
           <li>Use the <a href="#reusable-template">reusable template</a> for the next proof.</li>
           <li>Start with the <a href="#target-use-case">target use case</a>.</li>
           <li>Use <a href="#questions">alignment questions</a> to clarify scope.</li>
@@ -181,7 +181,7 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
       </article>
       <article class="industry-card" data-search>
         <h3>Powering enterprise integration</h3>
-        <p>Expose automation through secure APIs, queues, versioned rules, and controlled CAD workers that fit existing systems.</p>
+        <p>Expose automation through controlled APIs, queues, versioned rules, and governed CAD workers that fit existing systems.</p>
         <a class="card-link" href="#architecture">Reference architecture →</a>
       </article>
     </div>
@@ -212,7 +212,7 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
   <section id="context" class="section section-inner" aria-label="Public context">
     <p class="section-kicker">Public context</p>
     <h2 class="section-title">Language aligned to current public positioning.</h2>
-    <p class="section-subtitle">These facts are included only to keep the brief aligned with public Crown Castle positioning. They are not confidential inputs.</p>
+    <p class="section-subtitle">These facts are included only to keep the brief aligned with public Crown Castle positioning. They are not proprietary inputs.</p>
     <div class="grid">
       <article class="card purple span-4" data-search>
         <h3>Focused tower portfolio</h3>
@@ -452,7 +452,7 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
       </div>
       <div class="aws-flow" role="list" aria-label="AWS architecture flow">
         <div class="aws-step" role="listitem"><strong>Internal UI</strong><span>Order number, package upload, status, reviewer notes, artifact download.</span></div>
-        <div class="aws-step" role="listitem"><strong><a href="https://docs.aws.amazon.com/apigateway/" target="_blank" rel="noopener">API Gateway</a></strong><span>Secure job submission and status endpoints.</span></div>
+        <div class="aws-step" role="listitem"><strong><a href="https://docs.aws.amazon.com/apigateway/" target="_blank" rel="noopener">API Gateway</a></strong><span>Controlled job submission and status endpoints.</span></div>
         <div class="aws-step" role="listitem"><strong><a href="https://docs.aws.amazon.com/lambda/" target="_blank" rel="noopener">Lambda</a> / <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-configuration.html" target="_blank" rel="noopener">ECS</a></strong><span>Validate request, normalize metadata, create job ID.</span></div>
         <div class="aws-step" role="listitem"><strong><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/" target="_blank" rel="noopener">DynamoDB</a> / <a href="https://docs.aws.amazon.com/rds/" target="_blank" rel="noopener">RDS</a></strong><span>Job state, order reference, rule version, review state.</span></div>
         <div class="aws-step" role="listitem"><strong><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/" target="_blank" rel="noopener">S3 input</a></strong><span>Templates, DWGs, PDFs, JSON, SOW/rules, normalized package.</span></div>
@@ -558,7 +558,7 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
         <h2>Security and governance</h2>
         <ul class="tight">
           <li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html" target="_blank" rel="noopener">AWS KMS</a> for encryption control over S3 packages, secrets, and sensitive logs.</li>
-          <li><a href="https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html" target="_blank" rel="noopener">AWS Secrets Manager</a> for credentials, service tokens, and rotation strategy.</li>
+          <li><a href="https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html" target="_blank" rel="noopener">AWS Secrets Manager</a> for protected configuration, service authentication material, and rotation workflow.</li>
           <li>IAM least-privilege roles by layer: API, orchestrator, worker, artifact reader, reviewer.</li>
           <li>Private networking/VPC endpoints where proprietary drawings and metadata should not traverse public paths.</li>
           <li>CloudTrail for API activity and audit evidence; CloudWatch for operational logs and alarms.</li>
@@ -712,7 +712,7 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
       <article class="card red span-6" data-search>
         <h2>Guardrails</h2>
         <ul class="warn tight">
-          <li>No proprietary drawings, private source-system data, credentials, or client files in public AI tools.</li>
+          <li>No proprietary drawings, private source-system data, authentication material, or client files in public AI tools.</li>
           <li>No silent AI-generated drawing decisions without source provenance and review flags.</li>
           <li>No broad agentic writes against production repositories, buckets, or CAD libraries without approval gates.</li>
           <li>No generated code bypassing dependency review, tests, security review, or human code review.</li>
@@ -867,7 +867,7 @@ The brief frames an estimated implementation path for drafter-ready CAD automati
 
   <footer class="footer">
     <p><strong>Prepared by CAD Guardian LLC.</strong> Technical alignment brief for CAD automation. This is not an official Crown Castle document and contains no proprietary Crown Castle project data.</p>
-    <p class="small"><strong>Legal and privacy:</strong> This page is an unofficial technical alignment artifact. The linked GitHub repository contains synthetic sample data and demonstration AutoLISP files. It does not include proprietary Crown Castle drawings, source systems, credentials, private project data, analytics, tracking scripts, or credential capture. Notes typed into the session-note fields are stored only in the viewer's browser using localStorage and are not transmitted to CAD Guardian, Crown Castle, GitHub, or the repository.</p>
+    <p class="small"><strong>Legal and privacy:</strong> This page is an unofficial technical alignment artifact. The linked GitHub repository contains synthetic sample data and demonstration AutoLISP files. It does not include proprietary Crown Castle drawings, source systems, authentication material, private project data, analytics, tracking scripts, or access-data capture. Notes typed into the session-note fields are stored only in the viewer's browser using localStorage and are not transmitted to CAD Guardian, Crown Castle, GitHub, or the repository.</p>
   </footer>
 </main>
 
